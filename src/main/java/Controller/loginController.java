@@ -39,6 +39,8 @@ public class loginController {
             Stage stage = new Stage();
             try {
                 stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"))));
+                Stage satge1 = (Stage) usernameField.getScene().getWindow();
+                satge1.close();
             } catch (
                     IOException e) {
                 throw new RuntimeException(e);

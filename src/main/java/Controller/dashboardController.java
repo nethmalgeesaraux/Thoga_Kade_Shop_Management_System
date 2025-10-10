@@ -14,6 +14,8 @@ public class dashboardController {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/login.fxml"))));
+            Stage satge1 = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+            satge1.close();
         } catch (
                 IOException e) {
             throw new RuntimeException(e);
@@ -25,6 +27,8 @@ public class dashboardController {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/Customer.fxml"))));
+            Stage satge1 = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+            satge1.close();
         } catch (
                 IOException e) {
             throw new RuntimeException(e);
@@ -36,6 +40,8 @@ public class dashboardController {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/Item.fxml"))));
+            Stage satge1 = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+            satge1.close();
         } catch (
                 IOException e) {
             throw new RuntimeException(e);
@@ -47,6 +53,8 @@ public class dashboardController {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/Supplier.fxml"))));
+            Stage satge1 = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+            satge1.close();
         } catch (
                 IOException e) {
             throw new RuntimeException(e);
@@ -58,6 +66,8 @@ public class dashboardController {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/Employee.fxml"))));
+            Stage satge1 = (Stage) ((javafx.scene.Node) actionEvent.getSource()).getScene().getWindow();
+            satge1.close();
         } catch (
                 IOException e) {
             throw new RuntimeException(e);

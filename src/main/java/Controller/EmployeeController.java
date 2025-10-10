@@ -95,6 +95,8 @@ public class EmployeeController implements Initializable {
         Stage stage = new Stage();
         try {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"))));
+            Stage satge1 = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            satge1.close();
         } catch (
                 IOException e) {
             throw new RuntimeException(e);
