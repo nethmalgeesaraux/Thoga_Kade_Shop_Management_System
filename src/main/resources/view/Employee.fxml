@@ -1,14 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.EmployeeController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="515.0" prefWidth="1019.0" style="-fx-background-color: linear-gradient(to bottom right, #6dd5ed, #2193b0);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EmployeeController">
+    <children>
 
+        <!-- Title -->
+        <Label alignment="CENTER" layoutX="5.0" layoutY="7.0" prefHeight="50.0" prefWidth="1145.0" style="-fx-text-fill: white;" text="Employee ">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+
+        <!-- Table Card -->
+        <TableView fx:id="custable" layoutX="25.0" layoutY="229.0" prefHeight="238.0" prefWidth="1114.0" style="-fx-background-color: white; -fx-background-radius: 10;                         -fx-border-radius: 10; -fx-border-color: #2193b0;                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0, 0, 4);">
+            <columns>
+                <TableColumn fx:id="emsId" prefWidth="100.0" text="Emp ID" />
+                <TableColumn fx:id="nic" prefWidth="126.0000228881836" text="Nic" />
+                <TableColumn fx:id="name" prefWidth="108.66670227050781" text="Name" />
+                <TableColumn fx:id="dob" prefWidth="106.0" text="Dob" />
+                <TableColumn fx:id="position" prefWidth="122.66659545898438" text="Position" />
+                <TableColumn fx:id="salary" prefWidth="110.66656494140625" text="Salary" />
+                <TableColumn fx:id="number" prefWidth="112.0" text="Number" />
+                <TableColumn fx:id="address" prefWidth="106.6666259765625" text="Address" />
+                <TableColumn fx:id="joinDate" prefWidth="84.6666259765625" text="JoinDate" />
+            <TableColumn fx:id="stats" prefWidth="128.666748046875" text="Stats" />
+            </columns>
+        </TableView>
+
+        <!-- Buttons -->
+        <Button layoutX="899.0" layoutY="180.0" onAction="#btnReload" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Reload" />
+        <Button layoutX="1016.0" layoutY="90.0" onAction="#btnupdate" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Update" />
+        <Button layoutX="773.0" layoutY="180.0" onAction="#btnadd" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Add" />
+        <Button layoutX="1016.0" layoutY="39.0" onAction="#btndelete" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Delete" />
+        <Button layoutX="1016.0" layoutY="137.0" onAction="#btnclear" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Clear" />
+        <TextField fx:id="txtemsid" layoutX="24.0" layoutY="77.0" prefHeight="25.0" prefWidth="204.0" promptText="Employee Id" />
+        <TextField fx:id="txtname" layoutX="480.0" layoutY="77.0" prefHeight="25.0" prefWidth="204.0" promptText="Name" />
+        <TextField fx:id="txtnic" layoutX="250.0" layoutY="77.0" prefHeight="25.0" prefWidth="204.0" promptText="Nic" />
+        <TextField fx:id="txtdob" layoutX="24.0" layoutY="128.0" prefHeight="25.0" prefWidth="204.0" promptText="Dob" />
+        <TextField fx:id="txtposition" layoutX="250.0" layoutY="128.0" prefHeight="25.0" prefWidth="204.0" promptText="position" />
+        <TextField fx:id="txtsalary" layoutX="480.0" layoutY="128.0" prefHeight="25.0" prefWidth="204.0" promptText="Salary" />
+        <TextField fx:id="txtnumber" layoutX="24.0" layoutY="173.0" prefHeight="25.0" prefWidth="204.0" promptText="Number" />
+        <TextField fx:id="txtaddress" layoutX="250.0" layoutY="173.0" prefHeight="25.0" prefWidth="204.0" promptText="Address" />
+        <TextField fx:id="txtjoinDate" layoutX="480.0" layoutY="173.0" prefHeight="25.0" prefWidth="204.0" promptText="JoinDate" />
+        <Button layoutX="1016.0" layoutY="180.0" onAction="#btnBack" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Back" />
+      <TextField fx:id="txtstats" layoutX="721.0" layoutY="77.0" prefHeight="25.0" prefWidth="204.0" promptText="Stats" />
+
+    </children>
 </AnchorPane>

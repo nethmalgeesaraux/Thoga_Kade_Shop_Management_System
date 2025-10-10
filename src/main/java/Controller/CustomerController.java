@@ -162,15 +162,17 @@ public class CustomerController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       cusId.setCellValueFactory(new PropertyValueFactory<>("cusId"));
+       cusId.setCellValueFactory(new PropertyValueFactory<>("cusID"));
        title.setCellValueFactory(new PropertyValueFactory<>("title"));
-       name.setCellValueFactory(new PropertyValueFactory<>("name"));
-       adress.setCellValueFactory(new  PropertyValueFactory<>("adress"));
+       name.setCellValueFactory(new PropertyValueFactory<>("cusName"));
+       adress.setCellValueFactory(new  PropertyValueFactory<>("cusAddress"));
        dob.setCellValueFactory(new PropertyValueFactory<>("dob"));
-       salary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+       salary.setCellValueFactory(new PropertyValueFactory<>("cusSalary"));
        ctiy.setCellValueFactory(new PropertyValueFactory<>("city"));
        province.setCellValueFactory(new PropertyValueFactory<>("province"));
        postcode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+
+        System.out.println(CusList);
 
 
        custable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
