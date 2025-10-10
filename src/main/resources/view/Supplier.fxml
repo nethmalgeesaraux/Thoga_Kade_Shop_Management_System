@@ -1,14 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.SupplierController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="515.0" prefWidth="1019.0" style="-fx-background-color: linear-gradient(to bottom right, #6dd5ed, #2193b0);" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SupplierController">
+    <children>
 
+        <!-- Title -->
+        <Label alignment="CENTER" layoutX="5.0" layoutY="7.0" prefHeight="50.0" prefWidth="1010.0" style="-fx-text-fill: white;" text="Customer ">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+
+        <!-- Table Card -->
+        <TableView fx:id="suptable" layoutX="12.0" layoutY="233.0" prefHeight="239.0" prefWidth="1000.0" style="-fx-background-color: white; -fx-background-radius: 10;                         -fx-border-radius: 10; -fx-border-color: #2193b0;                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0, 0, 4);">
+            <columns>
+                <TableColumn fx:id="supplierId" prefWidth="100.0" text="Sup ID" />
+                <TableColumn fx:id="supplierName" prefWidth="61.333335876464844" text="Name" />
+                <TableColumn fx:id="supplierCompany" prefWidth="120.00001525878906" text="Company" />
+                <TableColumn fx:id="supplierAddress" prefWidth="129.99996948242188" text="Address" />
+                <TableColumn fx:id="supplierCity" prefWidth="119.99996948242188" text="City" />
+                <TableColumn fx:id="supplierProvince" prefWidth="132.0" text="Province" />
+                <TableColumn fx:id="supplierPostalCode" prefWidth="99.3333740234375" text="PostalCode" />
+                <TableColumn fx:id="supplierEmail" prefWidth="96.6666259765625" text="Email" />
+                <TableColumn fx:id="supplierContact" prefWidth="151.33331298828125" text="Contact" />
+            </columns>
+        </TableView>
+
+        <!-- Buttons -->
+        <Button layoutX="768.0" layoutY="168.0" onAction="#btnReload" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Reload" />
+        <Button layoutX="891.0" layoutY="66.0" onAction="#btnupdate" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Update" />
+        <Button layoutX="768.0" layoutY="66.0" onAction="#btnadd" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Add" />
+        <Button layoutX="768.0" layoutY="117.0" onAction="#btndelete" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Delete" />
+        <Button layoutX="891.0" layoutY="117.0" onAction="#btnclear" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Clear" />
+        <TextField fx:id="txtId" layoutX="24.0" layoutY="77.0" prefHeight="25.0" prefWidth="204.0" promptText="supplier Id" />
+        <TextField fx:id="txtName" layoutX="480.0" layoutY="77.0" prefHeight="25.0" prefWidth="204.0" promptText="Name" />
+        <TextField fx:id="txtCompany" layoutX="250.0" layoutY="77.0" prefHeight="25.0" prefWidth="204.0" promptText="Company" />
+        <TextField fx:id="txtAddress" layoutX="24.0" layoutY="128.0" prefHeight="25.0" prefWidth="204.0" promptText="Address" />
+        <TextField fx:id="txtCity" layoutX="250.0" layoutY="128.0" prefHeight="25.0" prefWidth="204.0" promptText="City" />
+        <TextField fx:id="txtProvince" layoutX="480.0" layoutY="128.0" prefHeight="25.0" prefWidth="204.0" promptText="Province" />
+        <TextField fx:id="txtPostalCode" layoutX="24.0" layoutY="173.0" prefHeight="25.0" prefWidth="204.0" promptText="PostalCode" />
+        <TextField fx:id="txtEmail" layoutX="250.0" layoutY="173.0" prefHeight="25.0" prefWidth="204.0" promptText="Email" />
+        <TextField fx:id="txtContact" layoutX="480.0" layoutY="173.0" prefHeight="25.0" prefWidth="204.0" promptText="supplierContact" />
+        <Button layoutX="891.0" layoutY="168.0" onAction="#btnBack" prefHeight="35" prefWidth="100" style="-fx-background-color: #2193b0; -fx-text-fill: white;                      -fx-background-radius: 15; -fx-font-size: 14;" text="Back" />
+
+    </children>
 </AnchorPane>
