@@ -1,5 +1,6 @@
 package Controller;
 
+import dao.EmployeeDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,175 +8,78 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import modle.DTO.EmployeeDTO;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EmployeeController implements Initializable {
 
-
-    ObservableList<EmployeeDTO> Employee= FXCollections.observableArrayList(
-            new EmployeeDTO("E001", "Sunil Perera", "832451230V", "1983-07-12", "Manager", 75000.0, "0712456789", "No.15Temple Road, Kalutara", "2018-05-10", "Active"),
-            new EmployeeDTO("E002", "Kamal Silva", "912345678V", "1990-03-22", "Sales Executive", 55000.0, "0723456789", "No.22 Lake Road, Colombo", "2019-08-15", "Active"),
-            new EmployeeDTO("E003", "Nimal Fernando", "823456789V", "1985-11-30", "Accountant", 60000.0, "0734567890", "No.5 River Road, Galle", "2020-01-20", "Inactive")
-
-    );
+    private ObservableList<EmployeeDTO> employeeList = FXCollections.observableArrayList();
+    private EmployeeDAO employeeDAO;
 
     @FXML
     private TableColumn<?, ?> address;
-
     @FXML
     private TableView<EmployeeDTO> custable;
-
     @FXML
     private TableColumn<?, ?> dob;
-
     @FXML
     private TableColumn<?, ?> emsId;
-
     @FXML
     private TableColumn<?, ?> joinDate;
-
     @FXML
     private TableColumn<?, ?> name;
-
     @FXML
     private TableColumn<?, ?> nic;
-
     @FXML
     private TableColumn<?, ?> number;
-
     @FXML
     private TableColumn<?, ?> position;
-
     @FXML
     private TableColumn<?, ?> salary;
-
     @FXML
     private TableColumn<?, ?> stats;
-
     @FXML
     private TextField txtaddress;
-
     @FXML
     private TextField txtdob;
-
     @FXML
     private TextField txtemsid;
-
     @FXML
     private TextField txtjoinDate;
-
     @FXML
     private TextField txtname;
-
     @FXML
     private TextField txtnic;
-
     @FXML
     private TextField txtnumber;
-
     @FXML
     private TextField txtposition;
-
     @FXML
     private TextField txtsalary;
-
     @FXML
     private TextField txtstats;
 
-    @FXML
-    void btnBack(ActionEvent event) {
-        Stage stage = new Stage();
-        try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"))));
-            Stage satge1 = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            satge1.close();
-        } catch (
-                IOException e) {
-            throw new RuntimeException(e);
-        }
-        stage.show();
-
-    }
-
-    @FXML
-    void btnReload(ActionEvent event) {
-        custable.setItems(Employee);
-
-    }
-
-    @FXML
-    void btnadd(ActionEvent event) {
-        EmployeeDTO employeeDTO = new EmployeeDTO(
-                txtemsid.getText(),
-                txtname.getText(),
-                txtnic.getText(),
-                txtdob.getText(),
-                txtposition.getText(),
-                Double.parseDouble(txtsalary.getText()),
-                txtnumber.getText(),
-                txtaddress.getText(),
-                txtjoinDate.getText(),
-                txtstats.getText()
-        );
-        Employee.add(employeeDTO);
-        custable.setItems(Employee);
-
-    }
-
-    @FXML
-    void btnclear(ActionEvent event) {
-        txtemsid.clear();
-        txtname.clear();
-        txtnic.clear();
-        txtdob.clear();
-        txtposition.clear();
-        txtsalary.clear();
-        txtnumber.clear();
-        txtaddress.clear();
-        txtjoinDate.clear();
-        txtstats.clear();
-
-    }
-
-    @FXML
-    void btndelete(ActionEvent event) {
-        EmployeeDTO selectedItem = custable.getSelectionModel().getSelectedItem();
-        Employee.remove(selectedItem);
-        custable.setItems(Employee);
-
-    }
-
-    @FXML
-    void btnupdate(ActionEvent event) {
-        EmployeeDTO selectedEmployee = custable.getSelectionModel().getSelectedItem();
-        if (selectedEmployee != null) {
-            selectedEmployee.setEmpID(txtemsid.getText());
-            selectedEmployee.setEmpName(txtname.getText());
-            selectedEmployee.setEmpNic(txtnic.getText());
-            selectedEmployee.setEmpDob(txtdob.getText());
-            selectedEmployee.setEmpPosition(txtposition.getText());
-            selectedEmployee.setEmpSalary(Double.parseDouble(txtsalary.getText()));
-            selectedEmployee.setEmpnumber(txtnumber.getText());
-            selectedEmployee.setEmpAddress(txtaddress.getText());
-            selectedEmployee.setEmpJoinDate(txtjoinDate.getText());
-            selectedEmployee.setEmpStatus(txtstats.getText());
-            custable.refresh();
-        }
-
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        employeeDAO = new EmployeeDAO();
+        loadAllEmployees();
 
+        initializeTableColumns();
+        setupTableSelectionListener();
+    }
+
+    private void initializeTableColumns() {
         emsId.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("empID"));
         name.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("empName"));
         nic.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("empNic"));
@@ -186,7 +90,9 @@ public class EmployeeController implements Initializable {
         address.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("empAddress"));
         joinDate.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("empJoinDate"));
         stats.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("empStatus"));
+    }
 
+    private void setupTableSelectionListener() {
         custable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 txtemsid.setText(newValue.getEmpID());
@@ -201,8 +107,130 @@ public class EmployeeController implements Initializable {
                 txtstats.setText(newValue.getEmpStatus());
             }
         });
+    }
 
+    private void loadAllEmployees() {
+        try {
+            List<EmployeeDTO> employees = employeeDAO.getAllEmployees();
+            employeeList.clear();
+            employeeList.addAll(employees);
+            custable.setItems(employeeList);
+        } catch (SQLException e) {
+            showAlert("Database Error", "Failed to load employees: " + e.getMessage());
+        }
+    }
 
+    @FXML
+    void btnBack(ActionEvent event) {
+        Stage stage = new Stage();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dashboard.fxml"))));
+            Stage stage1 = (Stage) txtemsid.getScene().getWindow();
+            stage1.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.show();
+    }
 
+    @FXML
+    void btnReload(ActionEvent event) {
+        loadAllEmployees();
+    }
+
+    @FXML
+    void btnadd(ActionEvent event) {
+        try {
+            EmployeeDTO employee = new EmployeeDTO(
+                    txtemsid.getText(),
+                    txtname.getText(),
+                    txtnic.getText(),
+                    txtdob.getText(),
+                    txtposition.getText(),
+                    Double.parseDouble(txtsalary.getText()),
+                    txtnumber.getText(),
+                    txtaddress.getText(),
+                    txtjoinDate.getText(),
+                    txtstats.getText()
+            );
+
+            if (employeeDAO.saveEmployee(employee)) {
+                showAlert("Success", "Employee added successfully!");
+                loadAllEmployees();
+                btnclear(event);
+            } else {
+                showAlert("Error", "Failed to add employee!");
+            }
+        } catch (SQLException e) {
+            showAlert("Database Error", "Failed to add employee: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            showAlert("Input Error", "Please enter valid salary!");
+        }
+    }
+
+    @FXML
+    void btnclear(ActionEvent event) {
+        txtemsid.clear();
+        txtname.clear();
+        txtnic.clear();
+        txtdob.clear();
+        txtposition.clear();
+        txtsalary.clear();
+        txtnumber.clear();
+        txtaddress.clear();
+        txtjoinDate.clear();
+        txtstats.clear();
+    }
+
+    @FXML
+    void btndelete(ActionEvent event) {
+        try {
+            if (employeeDAO.deleteEmployee(txtemsid.getText())) {
+                showAlert("Success", "Employee deleted successfully!");
+                loadAllEmployees();
+                btnclear(event);
+            } else {
+                showAlert("Error", "Failed to delete employee!");
+            }
+        } catch (SQLException e) {
+            showAlert("Database Error", "Failed to delete employee: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void btnupdate(ActionEvent event) {
+        try {
+            EmployeeDTO employee = new EmployeeDTO(
+                    txtemsid.getText(),
+                    txtname.getText(),
+                    txtnic.getText(),
+                    txtdob.getText(),
+                    txtposition.getText(),
+                    Double.parseDouble(txtsalary.getText()),
+                    txtnumber.getText(),
+                    txtaddress.getText(),
+                    txtjoinDate.getText(),
+                    txtstats.getText()
+            );
+
+            if (employeeDAO.updateEmployee(employee)) {
+                showAlert("Success", "Employee updated successfully!");
+                loadAllEmployees();
+            } else {
+                showAlert("Error", "Failed to update employee!");
+            }
+        } catch (SQLException e) {
+            showAlert("Database Error", "Failed to update employee: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            showAlert("Input Error", "Please enter valid salary!");
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
